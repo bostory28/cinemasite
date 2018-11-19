@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="member" namespace="/member" extends="default">
+		
+		<!-- 회원가입폼 -->
+		<action name="enrollForm">
+			<result>/jsp/member/enrollForm.jsp</result>
+		</action>
+		<!-- 로그인 폼 -->
+		<action name="loginForm">
+			<result>/jsp/member/loginForm.jsp</result>
+		</action>
+		<!-- 마이페이지 폼 -->
+		<action name="goMyPageForm" class="hkc.member.MemberAction" method="goMyPageForm">
+			<result>/jsp/member/myPageForm.jsp</result>
+		</action>
+		<!-- 회원가입하기 -->
+		<action name="enrollMember" class="hkc.member.MemberAction" method="enrollMember">
+			<result type="redirect">/index.action</result>
+		</action>
+		<!-- id중복체크 -->
+		<action name="checkId" class="hkc.member.MemberAction" method="checkId">
+			<result type="json"></result>
+		</action>
+		<!-- 전화번호 중복체크 -->
+		<action name="checkPhone" class="hkc.member.MemberAction" method="checkPhone">
+			<result type="json"></result>
+		</action>
+		<!-- 로그인 -->
+		<action name="login" class="hkc.member.MemberAction" method="login">
+			<result type="json"></result>
+		</action>
+		<!-- 개인정보 수정 버튼 -->
+		<action name="goPass_cnfForm" class="hkc.member.MemberAction" method="goPass_cnfForm">
+			<result>/jsp/member/pass_cnfForm.jsp</result>
+		</action>
+		
+		<!-- 비밀번호 확인 -->
+		<action name="pass_cnf" class="hkc.member.MemberAction" method="pass_cnf">
+			<result type="json"></result>
+		</action>
+		<!-- 예매내역 취소 삭제 -->
+		<action name="cancleReservation" class="hkc.member.MemberAction" method="cancleReservation">
+			<result type="redirect">goMyPageForm.action</result>
+		</action>
+		<!-- 개인정보 수정폼 -->
+		<action name="goModifyForm" class="hkc.member.MemberAction" method="goModifyForm">
+			<result>/jsp/member/modifyForm.jsp</result>
+		</action>
+		<!-- 개인정보수정 -->
+		<action name="modifyMember" class="hkc.member.MemberAction" method="modifyMember">
+			<result type="redirect">goMyPageForm.action</result>
+		</action>
+		<!-- 로그아웃 -->
+		<action name="logout" class="hkc.member.MemberAction" method="logout">
+			<result type="redirect">/index.action</result>
+		</action>
+	</package>
+</struts>

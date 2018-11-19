@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movielist">
+	<select id="movielistView" resultType="MovieVO">
+		select 
+			m.movie_seq,
+		    m.title,
+            m.poster,
+            m.stillshot,
+            m.openingday,
+            ceil((m.openingday-sysdate)) "dday",
+            (select
+		        round(avg(star),2)
+		        from review
+		        where movie_seq=m.movie_seq
+		      ) "starratio"
+		from 
+		        movie m
+		where
+           m.closingday > sysdate
+		order by openingday desc	
+	</select>
+	
+	<select id="getMovieDetail" parameterType="String" resultType="MovieVO">
+		select
+		      *
+		from movie
+		where title=#{title}
+	</select>
+	
+	
+	<select id="getReserveList" resultType="ReserveVO">
+		select
+		      r.title,
+		      (select
+		        m.poster
+		        from movie m
+		        where m.title=r.title
+		      ) "poster",
+		      (select
+		        m.stillshot
+		        from movie m
+		        where m.title=r.title
+		      ) "stillshot",
+		      (select
+		        m.openingday
+		        from movie m
+		        where m.title=r.title
+		      ) "openingday",
+		      lpad(to_char(sum(r.peoplenum),'999999'),10,' ') "peoplenum",
+		      round(ratio_to_report(sum(r.peoplenum)) over(partition by GROUPING_ID(r.title))*100,2) "ratio",
+		      (select
+		        round(avg(star),2)
+		        from review
+		        where movie_seq=(select
+				                  m.movie_seq
+				                  from movie m
+				                  where m.title=r.title
+				                )
+		      ) "starratio"
+		from reserve r
+		where title in
+	      (select title
+	        from movie
+	        where closingday > sysdate
+	        intersect
+	        select title
+	        from reserve
+	      )
+		group by r.title
+		order by "ratio" desc
+	</select>
+	
+		
+</mapper>

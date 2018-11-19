@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="time" namespace="/time" extends="default">
+		<action name="goTimetable" class="hkc.time.TimeAction" method="goTimetable">
+			<result name="success">/jsp/sample/sample.jsp</result>
+			<result name="login" type="redirect">/member/loginForm.action</result>
+		</action>
+		<action name="selectOpeningMovie" class="hkc.time.TimeAction" method="selectOpeningMovie">
+			<result type="json"></result>
+		</action>
+		<action name="timeUserMovieChoice" class="hkc.time.TimeAction" method="timeUserMovieChoice">
+			<result type="json"></result>
+		</action>
+		<action name="timeUserDayChoice" class="hkc.time.TimeAction" method="timeUserDayChoice">
+			<result type="json"></result>
+		</action>
+		<action name="timeSelectMovieTime" class="hkc.time.TimeAction" method="timeSelectMovieTime">
+			<result type="json"></result>
+		</action>
+		<action name="timeSelectAllMovieTime" class="hkc.time.TimeAction" method="timeSelectAllMovieTime">
+			<result type="json"></result>
+		</action>
+		<action name="goTimetableList">
+			<result>/jsp/sample/showtimes.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reserve">
+	<!-- 쿠폰이 있는지 확인한다. -->
+	<select id="getCouponInfo" parameterType="String" resultType="Reserve">
+		select
+				*
+		from
+				advance
+		where
+				advanceno = #{couponSearch}
+	</select>
+	<!-- 개인의 포인트를 가져온다. -->
+	<select id="getPointOfMember" parameterType="String" resultType="Member">
+		select
+				point
+		from
+				members
+		where
+				userid = #{userid}
+	</select>
+	<!-- 카드정보가 맞는지 -->
+	<select id="isMemberOfCard" parameterType="Creditcard" resultType="Creditcard">
+		select
+				*
+		from
+				creditcard
+		where
+				cardsort = #{cardsort} and 
+				cardnum = #{cardnum} and 
+				password = #{password} and 
+				expirationdate = #{expirationdate} and 
+				birthday = #{birthday}
+	</select>
+	<!-- 폰정보가 맞는지 -->
+	<select id="isMemberOfPhone" parameterType="Phone" resultType="Phone">
+		select
+				*
+		from
+				phone
+		where
+				phonenum = #{phonenum} and
+				company = #{company} and
+				birthday = #{birthday}
+	</select>
+	<!-- 예매한다. -->
+	<insert id="insertReserve" parameterType="Reserve">
+		<selectKey keyProperty="reserve_seq" resultType="int" order="BEFORE">
+			select SEQ_RESERVE_RESERVE_SEQ.nextval from dual
+		</selectKey>
+		insert 
+		into
+				reserve
+		values
+				(
+				#{reserve_seq}, 
+				#{timetable_seq}, 
+				#{reservationno},
+				#{userid}, 
+				sysdate, 
+				#{price}, 
+				#{optionpay}, 
+				#{saleticket},  
+				#{usedpoint},  
+				#{title},  
+				#{peoplenum}  
+				)
+	</insert>
+	<!-- 좌석을 예매한다. -->
+	<insert id="insertSeat" parameterType="hashMap">
+		insert
+		into
+				seatreserved(
+							timetable_seq,
+							theaterno,
+							seatno,
+							userid,
+							reservationno
+							)
+		values
+				(
+				#{timetable_seq},
+				#{theaterno},
+				#{seatnostr},
+				#{userid},
+				#{reservationno}
+				)
+	</insert>
+	<!-- 사용한 포인트를 업데이트 한다. -->
+	<update id="updatePointUsed" parameterType="hashmap">
+		update
+				members
+		set
+				point = point - #{point} + #{price} / 10
+		where
+				userid = #{userid}
+	</update>	
+	<!-- 사용한 쿠폰을 없앤다. -->
+	<delete id="updateCouponUsed" parameterType="String">
+		delete
+		from
+				advance
+		where
+				advanceno = #{advanceno}
+	</delete>
+	<!-- 예매결과를 가져온다. -->
+	<select id="getReserveResult" parameterType="Reserve" resultType="Reserve">
+		select 
+		        r.reservationno,
+		        r.title,
+		        t.starttime,
+		        t.theaterno,
+		        r.peoplenum,
+		        r.optionpay,
+		        r.price
+		from
+		        reserve r,
+		        timetable t
+		where
+		        r.timetable_seq = t.timetable_seq and
+		        r.timetable_seq = #{timetable_seq} and
+		        r.reservationno = #{reservationno}
+	</select>
+	<!-- 예매한 좌석정보를 가져온다. -->
+	<select id="getSeatReserved" parameterType="Reserve" resultType="Reserve">
+		select
+		        sr.seatno
+		from    
+		        seatreserved sr
+		where 
+		        sr.reservationno = #{reservationno}
+	 order by
+	 			sr.seatno
+	</select>
+</mapper>

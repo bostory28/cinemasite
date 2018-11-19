@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movieAdmin">
+	<select id="getMovieList" parameterType="String" resultType="Movie">
+		select
+		        poster,
+		        title,
+		        DIRECTOR,
+		        runningtime,
+		        rate,
+		        OPENINGDAY,
+		        CLOSINGDAY,
+		        MADEDAY,
+		        license
+		from
+		        movie
+		where
+		        to_char(OPENINGDAY,'yyyy') = #{year}
+	</select>
+</mapper>

@@ -1,0 +1,90 @@
+body {
+color: #5a5a5a;
+}
+body,p,h1,h2,h3,h4,h5,h6,a {
+		font-family: 나눔바른고딕, NanumBarunGothic, NanumBarunGothicOTF, 나눔고딕, NanumGothic, 맑은 고딕;
+		color: #333333;
+}
+
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+#header_wrap{
+/* 		background-image:url('back_pattern.png'); */
+	background-color:#FFFFFF;
+	margin:0 auto;
+	width:1024px;
+}
+
+#header{
+	width:1024px;
+}
+
+#header > .h_title{
+	display: inline;
+}
+
+#logodiv{
+	display: inline;
+}
+
+#header > div > .h_gnb{
+	display: inline;
+	margin-left: 130px;
+}
+
+
+.h_gnb{
+	display: inline;
+	margin:0 auto;
+}
+
+.h_gnb > span{
+	display: inline;
+	overflow:hidden; 
+	float:none;
+}
+.h_gnb > span > a{
+	display: inline;
+	margin-left: 50px;
+	text-decoration:none;
+	font-size: 16px;
+	font-weight:bold;
+	color: #666;
+/* 	text-shadow: 2px 2px 2px gray; */
+}
+
+.h_gnb > span > a:hover{
+	display: inline;
+	margin-left: 50px;
+	text-decoration:none;
+	font-size: 16px;
+	font-weight:bold;
+	color: #666;
+/* 	text-shadow: 3px 3px 3px gray; */
+}
+
+#header > div > .h_inb{
+	width:1024px;
+	display: inline;
+	font-size: 12px;
+	font-weight:bold;
+	float:right;
+	color:#ff8080;
+}
+
+.h_inb a{
+	font-weight:bold;
+	display: inline;
+	margin-left: 10px;
+	text-decoration:none;	
+	color: #A1958E;
+}
+
+.h_inb a:hover{
+	font-weight:bold;
+	display: inline;
+	margin-left: 10px;
+	text-decoration:none;
+	color:#DC2727;
+}

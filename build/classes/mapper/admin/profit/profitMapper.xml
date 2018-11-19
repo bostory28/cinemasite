@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="profit">
+	<!-- 영화별 통계 -->
+	<select id="profitMovieView" parameterType="hashmap" resultType="Profit">
+		select
+		        mo.title,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 10 and 19 and
+		                    re.title = mo.title), 0) as teen,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 20 and 29 and
+		                    re.title = mo.title), 0) as twenty,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 30 and 39 and
+		                    re.title = mo.title), 0) as thirty,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 40 and 49 and
+		                    re.title = mo.title), 0) as forty,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 50 and 59 and
+		                    re.title = mo.title), 0) as fifty,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    floor(months_between(sysdate, me.birthday)/12)+1 between 60 and 69 and
+		                    re.title = mo.title), 0) as sixty,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    me.sex = '남자' and
+		                    re.title = mo.title), 0) as man,
+		        nvl((select
+		                    sum(re.peoplenum)
+		            from
+		                    reserve re,
+		                    members me
+		            where
+		                    re.userid = me.userid and
+		                    me.sex = '여자' and
+		                    re.title = mo.title), 0) as woman,
+		        nvl(sum(reme.peoplenum), 0) as totalPeopleCntOfMovieSeen,
+		        nvl(sum(reme.moviesale), 0) as totalSaleOfMovie,
+		        nvl(sum(reme.moviesale) - sum(mo.license)/count(mo.license), 0) as netProfit
+		from
+		        (select
+		                  re.userid,
+		                  me.birthday,
+		                  me.sex,
+		                  re.title,
+		                  re.peoplenum,
+		                  re.peoplenum*9000+(select
+		                                              count(1)
+		                                      from
+		                                              seatreserved sr,
+		                                              seat s,
+		                                              reserve r
+		                                      where
+		                                              sr.seatno = s.seatno and
+		                                              sr.THEATERNO  = s.THEATERNO and
+		                                              r.reservationno = sr.reservationno and
+		                                              s.seattype = 3 and
+		                                              r.title = re.title and
+		                                              r.userid = re.userid)*6000 as moviesale
+		          from
+		                  reserve re,
+		                  members me
+		          where
+		                  re.userid = me.userid) reme,
+		        movie mo
+		where
+		        reme.title(+) = mo.title and
+		        to_char(trunc(mo.openingday, 'yyyy'), 'yyyy') = #{yearSelected}
+		group by 
+		        mo.title
+		order by
+		        netprofit desc
+	</select>
+	
+	<!-- 월별 통계 -->
+	<select id="profitMonthView" parameterType="Profit" resultType="Profit">
+		select
+		        to_char(re.datepayed, 'mm')||'월' as mon,
+		        sum(re.peoplenum) as countPeopleOfmonth,
+		        sum(re.price+re.usedpoint+saleticket) as  totalSaleOfMonth,
+		        sum(re.price+re.usedpoint+saleticket) - sum(mo.license)/count(mo.license) as  netPrifotOfMonth
+		from
+		        reserve re,
+		        movie mo
+		where
+		        re.title = mo.title and
+		        to_char(re.datepayed, 'yyyy') = #{yearSelected}
+		group by
+		        to_char(re.datepayed, 'mm')
+		order by
+				mon
+	</select>
+</mapper>

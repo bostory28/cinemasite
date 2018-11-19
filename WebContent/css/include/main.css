@@ -1,0 +1,129 @@
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+#content{
+	margin:0 auto;
+	width:1024px;
+	overflow:hidden;
+}
+
+#c_section{
+	position:relative;
+	padding-top:5px;
+}
+
+#c_section > li{
+	overflow:hidden; 
+	float:left;
+}
+
+#section_title{
+	text-align:center;
+	height:40px;
+	width:1024px;
+/* 	background-image:url('line_pattern.png'); */
+	background-repeat-x:0 0;
+}
+
+#section_content{text-align:center;}
+
+#section_tooltip{
+	color: #CE3636;
+	padding:5px;
+	font-weight:bold;
+	font-size: 25px;
+}
+
+#section_content li{
+	position:relative;
+	display:inline;
+	overflow:hidden;
+	float:left;
+	text-align:center;
+}
+
+#detail_box{
+	position:relative;
+	padding:10px;
+	font-weight:bold;
+	font-size: 20px;
+}
+
+#detail_box > a{
+	text-decoration:none;
+	color: #666;
+	width:200px;      
+	text-overflow:ellipsis; 
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+#detail_box > a:hover{
+	text-decoration:none;
+	color: #D941C5;
+}
+
+#detail_box #dday{
+	position:absolute;
+	top:10px;
+	right:20px;
+	font-weight:bolder;
+	font-size:14px;
+	color:red;
+	background-color:#faffbc;
+	padding-top : 2px;
+	padding-bottom : 2px;
+	padding-left : 3px;
+	padding-right : 3px;
+	-moz-border-radius : 15px;
+	-webkit-border-radius : 15px;
+	border-radius : 15px;
+	width:50px;
+} 
+
+#star{
+	position:relative;
+	top:-160px;
+}
+
+#visual{height:350px;position:relative; }
+.touch_bullet{position:absolute;top:330px;left:50%;margin-left:-27px;}
+.touch_bullet li{float:left;}
+.touch_left_btn{position:absolute;top:50%;left:30px;margin-top:-25px;}
+.touch_right_btn{position:absolute;top:50%;right:30px;margin-top:-25px;}
+
+/* Swipe 2 required styles */
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+  
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > li {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+/* END required styles */
+#mySwipe img{width:100%; max-width:100%;z-index:40;}
+
+#mySwipe div b {
+  display:inline;
+  font-weight:bold;
+  color:#14ADE5;
+  font-size:20px;
+  text-align:center;
+  margin:10px;
+  padding:100px 10px;
+  box-shadow: 0 1px #EBEBEB;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid;
+  border-color: #E5E5E5 #D3D3D3 #B9C1C6;
+}

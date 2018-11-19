@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="detail">
+	<insert id="registerComment" parameterType="Review">
+		insert into review values(SEQ_review_review_seq.nextval,#{movie_seq},#{content},#{star},#{userid},to_date(sysdate,'YY/MM/DD'))
+	</insert>
+	
+	<select id="getComment" resultType="Review" parameterType="int">
+		select * from review where movie_seq = #{movie_seq} order by review_seq desc
+	</select>
+	
+	<select id="getMovie" resultType="Movie" parameterType="int">
+		select * from movie where movie_seq = #{movie_seq}
+	</select>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from review where review_seq = #{review_seq}
+	</delete>
+	
+	<update id="updateComment" parameterType="Review">
+		update review set content = #{content}, star = #{star} , reviewdate = to_date(sysdate,'YY/MM/DD') where review_seq = #{review_seq}
+	</update>
+	
+	<select id="getMansReserveCount" parameterType="int" resultType="int">
+		select count(*) from (select reserve.userid from timetable, reserve where timetable.timetable_seq = reserve.timetable_seq and timetable.movie_seq = #{movie_seq}) a, members where a.userid = members.userid and members.sex='남자'
+	</select>
+	
+	<select id="getWomansReserveCount" parameterType="int" resultType="int">
+		select count(*) from (select reserve.userid from timetable, reserve where timetable.timetable_seq = reserve.timetable_seq and timetable.movie_seq = #{movie_seq}) a, members where a.userid = members.userid and members.sex='여자'
+	</select>
+	
+	<select id="getMoviePointAvg" parameterType="int" resultType="float">
+		select nvl(round(avg(star),1), 0) from REVIEW where movie_seq = #{movie_seq}
+	</select>
+	
+	<!-- 10대  -->
+	<select id="getTeensReserveCount" parameterType="int" resultType="int">
+		select count(*) from (
+			select reserve.userid from timetable, reserve 
+			where timetable.timetable_seq = reserve.timetable_seq 
+			and timetable.movie_seq = #{movie_seq}) a, 
+			(<![CDATA[select * from members 
+			where to_number(to_char(birthday,'YYYY')) < to_number(to_char(sysdate,'YYYY')) - 10 
+			and to_number(to_char(birthday,'YYYY')) > to_number(to_char(sysdate,'YYYY')) - 20]]>) members 
+		where a.userid = members.userid
+	</select>
+	
+	<!-- 20대  -->
+	<select id="getTwentiesReserveCount" parameterType="int" resultType="int">
+		<![CDATA[select count(*) from 
+		(select reserve.userid 
+			from timetable, reserve 
+			where timetable.timetable_seq = reserve.timetable_seq 
+			and timetable.movie_seq = #{movie_seq}) a, 
+		(select * from members 
+			where to_number(to_char(birthday,'YYYY')) < to_number(to_char(sysdate,'YYYY')) - 20 
+			and to_number(to_char(birthday,'YYYY')) > to_number(to_char(sysdate,'YYYY')) - 30) members 
+		where a.userid = members.userid]]>
+	</select>
+	
+	<!-- 30대  -->
+	<select id="getThirtiesReserveCount" parameterType="int" resultType="int">
+		<![CDATA[select count(*) from 
+		(select reserve.userid 
+			from timetable, reserve 
+			where timetable.timetable_seq = reserve.timetable_seq 
+			and timetable.movie_seq = #{movie_seq}) a, 
+		(select * from members 
+			where to_number(to_char(birthday,'YYYY')) < to_number(to_char(sysdate,'YYYY')) - 30 
+			and to_number(to_char(birthday,'YYYY')) > to_number(to_char(sysdate,'YYYY')) - 40) members 
+		where a.userid = members.userid]]>
+	</select>
+	
+	<!-- 40대  -->
+	<select id="getFortiesReserveCount" parameterType="int" resultType="int">
+		<![CDATA[select count(*) from 
+		(select reserve.userid 
+			from timetable, reserve 
+			where timetable.timetable_seq = reserve.timetable_seq 
+			and timetable.movie_seq = #{movie_seq}) a, 
+		(select * from members 
+			where to_number(to_char(birthday,'YYYY')) < to_number(to_char(sysdate,'YYYY')) - 40 
+			and to_number(to_char(birthday,'YYYY')) > to_number(to_char(sysdate,'YYYY')) - 50) members 
+		where a.userid = members.userid]]>
+	</select>
+</mapper>

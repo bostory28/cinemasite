@@ -1,0 +1,166 @@
+
+#header{
+	width:1024px;
+	margin:0 auto;
+	height:110px;
+	position:relative;
+	z-index:60;
+	top:-13px;
+	!important;
+}
+
+#header > nav > #h_gnb{
+	position:absolute;
+	right:0;
+	bottom:-6px;
+}
+
+#header > nav > #h_inb{
+	position:absolute;
+	right:0;
+	line-height:1px;
+	top:23px;
+	font-size:12px;
+}
+
+#header > #h_title{
+	position:absolute;
+	left:20px;
+	top:52px;
+}
+
+#content_wrap{
+	background-image:url('bxSlider_pattern.png');
+	background-repeat:repeat-x;	
+
+}
+
+#content{
+	margin:0 auto;
+	width:1024px;
+	overflow:hidden;
+	background-color:#ffffff;
+
+}
+
+#c_section{
+	position:relative;
+	padding-top:5px;
+}
+
+#c_section > li{
+	overflow:hidden; 
+	float:left;
+}
+
+#section_title{
+	text-align:center;
+	height:40px;
+	width:1024px;
+	background-image:url('line_pattern.png');
+	background-repeat-x:0 0;
+}
+
+#section_content{text-align:center;}
+
+#section_tooltip{
+	color: #CE3636;
+	padding:5px;
+	font-weight:bold;
+	font-size: 25px;
+}
+
+#section_content li{
+	position:relative;
+	display:block;
+	overflow:hidden;
+	float:left;
+	text-align:center;
+}
+
+#detail_box{
+	position:relative;
+	padding:10px;
+	font-weight:bold;
+	font-size: 20px;
+}
+
+#detail_box > a{
+	text-decoration:none;
+	color: #666;
+	width:200px;      
+	display:inline-block;
+	text-overflow:ellipsis; 
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+#detail_box > a:hover{
+	text-decoration:none;
+	color: #D941C5;
+}
+
+#detail_box #dday{
+	position:absolute;
+	top:10px;
+	right:20px;
+	font-weight:bolder;
+	font-size:14px;
+	color:red;
+	background-color:#faffbc;
+	padding-top : 8px;
+	padding-bottom : 8px;
+	padding-left : 15px;
+	padding-right : 15px;
+	-moz-border-radius : 15px;
+	-webkit-border-radius : 15px;
+	border-radius : 15px;
+	width:50px;
+} 
+
+#star{
+	position:relative;
+	top:-160px;
+}
+
+#visual{height:350px;position:relative; }
+.touch_bullet{position:absolute;top:330px;left:50%;margin-left:-27px;}
+.touch_bullet li{float:left;}
+.touch_left_btn{position:absolute;top:50%;left:30px;margin-top:-25px;}
+.touch_right_btn{position:absolute;top:50%;right:30px;margin-top:-25px;}
+
+/* Swipe 2 required styles */
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+  
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > li {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+/* END required styles */
+#mySwipe img{width:100%; max-width:100%;z-index:40;}
+
+#mySwipe div b {
+  display:block;
+  font-weight:bold;
+  color:#14ADE5;
+  font-size:20px;
+  text-align:center;
+  margin:10px;
+  padding:100px 10px;
+  box-shadow: 0 1px #EBEBEB;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid;
+  border-color: #E5E5E5 #D3D3D3 #B9C1C6;
+}

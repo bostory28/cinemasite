@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="theater">
+	<!-- 해당 영화관의 좌석을 가져온다. -->
+	<select id="getTheaterSeat" parameterType="hashmap" resultType="Theater">
+		select
+		        *
+		from 
+		        (
+		          select 
+		                  r.SEATNO,
+		                  s.ROWSEAT,
+		                  s.COLSEAT,
+		                  s.SEATTYPE,
+		                  s.THEATERNO,
+		                  r.USERID
+		                  
+		                  
+		          from
+		                  SEATRESERVED r,
+		                  THEATER t,
+		                  seat s
+		          where
+		                  t.THEATERNO = s.THEATERNO and
+		                  s.SEATNO = r.SEATNO and
+		                  r.TIMETABLE_SEQ = #{timetable_seq} and
+		                  t.THEATERNO = #{theaterno}
+		                  
+		          union
+		          
+		          select
+		                  n.SEATNO,
+		                  n.ROWSEAT,
+		                  n.COLSEAT,
+		                  n.SEATTYPE,
+		                  n.THEATERNO,
+		                  decode(n.seattype, 10, '') as userid
+		          from
+		                  (
+		                        select 
+		                                s.SEATNO,
+		                                s.ROWSEAT,
+		                                s.COLSEAT,
+		                                s.SEATTYPE,
+		                                t.THEATERNO
+		                          from 
+		                                seat s, theater t
+		                         where 
+		                                s.THEATERNO = t.THEATERNO and
+		                                t.THEATERNO = #{theaterno}
+		                  minus
+		                        select 
+		                                r.SEATNO,
+		                                s.ROWSEAT,
+		                                s.COLSEAT,
+		                                s.SEATTYPE,
+		                                s.THEATERNO
+		                        from
+		                                SEATRESERVED r,
+		                                THEATER t,
+		                                seat s
+		                        where
+		                                t.THEATERNO = s.THEATERNO and
+		                                s.SEATNO = r.SEATNO and
+		                                r.TIMETABLE_SEQ = #{timetable_seq} and
+		                                t.THEATERNO = #{theaterno}
+		                  ) n
+		          ) a
+		order by
+		          a.rowseat, a.colseat
+	</select>
+	<!-- 영화의 정보를 가져온다. -->
+	<select id="getMovieInfo" parameterType="int" resultType="Theater">
+        select 
+                m.title,
+                m.rate,
+                m.poster,
+                tt.THEATERNO,
+                tt.SCREENINGDAY,
+                tt.STARTTIME,
+                m.RUNNINGTIME,
+                t.SEATNUM
+                
+        from
+                timetable tt,
+                movie m,
+                theater t
+        where
+                m.movie_seq = tt.movie_seq and
+                t.theaterno = tt.theaterno and
+                tt.TIMETABLE_SEQ = #{timetable_seq}
+	</select>
+	<!-- 현재 예매한 좌석의 수 -->
+	<select id="getCountReservedSeat" parameterType="int" resultType="int">
+		select
+		        count(seatno)
+		from
+		        seatreserved
+		where
+		        timetable_seq = #{timetable_seq}
+	</select>
+</mapper>

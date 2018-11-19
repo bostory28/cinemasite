@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+        <!-- Json 플러그인 사용. json타입의 Result 사용. -->
+        <result-types>
+        	<result-type name="json" class="org.apache.struts2.json.JSONResult"></result-type>    
+        </result-types>
+        
+        <interceptors>
+        	<!-- 로그인 인터셉터 정의 -->
+            <interceptor name="loginInterceptor" class="test.member.LoginInterceptor" />
+        
+        	<!-- 로그인 확인시 사용 인터셉터 스택 정의 -->
+            <interceptor-stack name="loginInterceptorStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+        
+        <!-- 순서 주의 (interceptor -> default action -> global result) -->
+<!--         <default-action-ref name="index" />    -->
+        
+        <!-- 모든 액션에서 "login"이 리턴되었을 때의 경로 (LoginInterceptor에서 리턴함) -->
+ 		<global-results>
+  			<result name="login" type="redirect">/member/loginForm.action</result>
+  		</global-results>
+        		
+        <!-- 메인 화면 -->
+        <action name="index" class="hkc.main.MainAction" method="mainView">
+            <result>/jsp/main/main.jsp</result>
+        </action>
+	</package>
+	
+<!-- include struts -->
+<include file="struts/theater/theaterStruts.xml"></include>
+<include file="struts/main/mainStruts.xml"></include>
+<include file="struts/movielist/movielistStruts.xml"></include>
+<include file="struts/admin/adminStruts.xml"></include>
+<include file="struts/detail/datailStruts.xml"></include>
+<include file="struts/reserve/reserveStruts.xml"></include>
+<include file="struts/member/memberStruts.xml"></include>
+<include file="struts/time/timeStruts.xml"></include>
+</struts>

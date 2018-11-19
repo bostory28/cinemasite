@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 회원등록 -->
+	<insert id="enrollMember" parameterType="Member">
+		insert
+		into
+		members(userid, password, name, birthday, sex, email, phone)
+		values
+		(#{userid}, #{password}, #{name}, #{birthday}, #{sex}, #{email}, #{phone})
+	</insert>
+	<!-- 이미 회원인지 아닌지 검사 -->
+	<select id="checkId" parameterType="String" resultType="Member">
+		select
+		*
+		from
+		members
+		where
+		userid = #{userid}
+	</select>
+	<select id="checkPhone" parameterType="String" resultType="Member">
+		select
+		*
+		from
+		members
+		where
+		phone = #{phone}
+	</select>
+	<!-- 아이디와 패스워드를 비교해 로그인 -->
+	<select id="login" parameterType="hashmap" resultType="Member">
+		select
+		*
+		from
+		members
+		where
+		userid = #{userid} and password = #{password}
+	</select>
+
+	<!-- 회원정보를 수정한다. -->
+	<update id="modifyMember" parameterType="Member">
+		update
+		members
+		set
+		password = #{password},
+		name = #{name},
+		email = #{email},
+		phone = #{phone},
+		sex = #{sex}
+		where
+		userid = #{userid}
+	</update>
+
+	<!-- 아이디와 패스워드를 비교해 개인정보 수정창으로 이동 -->
+	<select id="pass_cnf" parameterType="hashmap" resultType="Member">
+		select
+		*
+		from
+		members
+		where
+		userid = #{userid} and password = #{password}
+
+	</select>
+
+	<!-- 마이페이지에 필요한 정보를 가져오기 -->
+	
+	<!-- 예매 정보 가져오기 -->
+	<select id="reservedInfo" parameterType="Member" resultType="Reserve">
+		select
+		m.poster,
+		 r.reservationno, 
+         r.title, 
+         r.peoplenum,
+         r.price,
+         t.theaterno,
+         t.screeningday,
+         t.starttime
+		  from
+			   reserve r,
+         timetable t,
+         movie m
+		  where
+          r.timetable_seq = t.timetable_seq(+) and
+          t.movie_seq = m.movie_seq and
+          r.userid = #{userid} and
+          <![CDATA[     to_date(t.starttime, 'hh24:mi') >= case
+               when to_date(t.screeningday,'YY/MM/DD') = to_date(sysdate,'YY/MM/DD')  then to_date(to_char(sysdate, 'hh24:mi'), 'hh24:mi')
+              when to_date(t.screeningday,'YY/MM/DD') > to_date(sysdate,'YY/MM/DD')  then  to_date(t.starttime, 'hh24:mi')
+              when to_date(t.screeningday,'YY/MM/DD') < to_date(sysdate,'YY/MM/DD') then  to_date(t.starttime, 'hh24:mi')+1 
+        end  ]]>
+			</select>
+	<!-- 예매한 좌석정보 가져오기 -->		
+	<select id="seatInfo" parameterType="Member" resultType="Reserve">
+		select
+		reservationno,
+		seatno,
+		userid
+		  from
+		seatreserved
+		where
+		userid = #{userid}
+			</select>
+	<!-- 예매내역을 삭제-->
+	<delete id="cancleReservation" parameterType="String">
+		delete
+		from
+		reserve
+		where
+		reservationno = #{reservationno}
+	</delete>
+	<!-- 예매한 좌석 정보를 삭제 -->
+	<delete id="cancleSeatReservation" parameterType="String">
+		delete
+		from
+		seatreserved
+		where
+		reservationno = #{reservationno}
+	</delete>
+	<update id="canclePoint" parameterType="Member">
+		update members set point = point - #{point} where userid = #{userid}
+	</update>
+</mapper>

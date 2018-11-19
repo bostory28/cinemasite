@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="profit" namespace="/profit" extends="default">
+		<action name="profitView">
+			<result>/jsp/admin/profit/movieProfit.jsp</result>
+		</action>
+		<action name="profitMovieView" class="hkc.admin.profit.ProfitAction" method="profitMovieView">
+			<result type="json"></result>
+		</action>
+		<action name="profitMonthView" class="hkc.admin.profit.ProfitAction" method="profitMonthView">
+			<result type="json"></result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="reserve" namespace="/reserve" extends="default">
+		<!-- 예약할 때 필요한 기본정보를 가져온다. -->
+		<action name="reserveView" class="hkc.reserve.ReserveAction" method="reserveView">
+			<result>/jsp/reserve/reserveView.jsp</result>
+		</action>
+		<!-- 해당 쿠폰이 존재하는지 검사 -->
+		<action name="isCouponInfo" class="hkc.reserve.ReserveAction" method="isCouponInfo">
+			<result type="json"></result>
+		</action>
+		<!-- 예매완료 -->
+		<action name="reserveComplete" class="hkc.reserve.ReserveAction" method="reserveComplete">
+			<result>/jsp/reserve/reserveComplete.jsp</result>
+		</action>
+		<!-- 카드의 정보가 맞는지 -->
+		<action name="correctCardInfo" class="hkc.reserve.ReserveAction" method="correctCardInfo">
+			<result type="json"></result>
+		</action>
+		<!-- 핸드폰 정보가 맞는지 -->
+		<action name="correctPhoneInfo"  class="hkc.reserve.ReserveAction" method="correctPhoneInfo">
+			<result type="json"></result>
+		</action>
+		<!-- 예매결과를 가져온다. -->
+		<action name="reserveResult" class="hkc.reserve.ReserveAction" method="reserveResult">
+			<result type="json"></result>
+		</action>
+	</package>
+</struts>

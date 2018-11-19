@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="movielist" namespace="/movielist" extends="default">
+		<action name="movielist" class="hkc.movielist.MovieListAction" method="movielistView">
+			<result>/jsp/movielist/movielist.jsp</result>
+		</action>
+		<action name="movieDetail" class="hkc.movielist.MovieListAction" method="movieDetailView">
+			<result>/jsp/detail/information.jsp</result>
+		</action>
+	</package>
+</struts>

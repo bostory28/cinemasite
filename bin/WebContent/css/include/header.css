@@ -1,0 +1,104 @@
+body{
+	padding:0;
+	margin:0;
+}
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	* {
+		font-family : 'Nanum Gothic';
+	}
+
+#header_wrap{
+		background-image:url('back_pattern.png');
+		background-repeat-x:0 0;
+		width:100%;
+		min-width:1200px;	
+}
+
+#header{
+	width:1024px;
+	margin:0 auto;
+	height:122px;
+	position:relative;
+	z-index:60;
+	top:-29px;
+}
+
+#header > .h_title{
+	position:absolute;
+	left:20px;
+	top:50px;
+
+}
+
+#header > nav > .h_gnb{
+	position:absolute;
+	right:0;
+	bottom:-20px;
+	
+}
+
+.h_gnb{
+	margin-right:290px;
+}
+
+.h_gnb > li{
+	overflow:hidden; 
+	float:left;
+	padding-right:40px;
+}
+.h_gnb > li > a{
+	display:block;
+	padding-right:10px;
+	padding-left:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	text-decoration:none;
+	font-weight:900;
+	font-size: 20px;
+	line-height: 1.2;
+	color: #666;
+	text-shadow: 2px 2px 2px gray;
+}
+
+.h_gnb > li > a:hover{
+	display:block;
+	padding-right:10px;
+	padding-left:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	text-decoration:none;
+	font-weight:bold;
+	font-size: 20px;
+	line-height: 1.2;
+	color: #666;
+	text-shadow: 3px 3px 3px gray;
+}
+
+
+#header > nav > .h_inb{
+	position:absolute;
+	right:0;
+	line-height:1px;
+	top:13px;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.h_inb  li{
+	padding:5px;
+	display:block;
+	float:left; 
+	margin-top:20px;
+	
+}
+
+.h_inb li a{
+	text-decoration:none;	
+	color:#DC241F;
+}
+
+.h_inb  li a:hover{
+	text-decoration:none;
+	color:#7D0804;
+}

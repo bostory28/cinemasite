@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movieAdmin">
+	<select id="getMovieList" parameterType="String" resultType="Movie">
+		select
+				movie_seq,
+		        poster,
+		        title,
+		        DIRECTOR,
+		        runningtime,
+		        rate,
+		        to_date(to_char(openingday, 'yyyy/mm/dd'), 'yyyy/mm/dd') as openingday,
+		        to_date(to_char(closingday, 'yyyy/mm/dd'), 'yyyy/mm/dd') as closingday,
+		        to_date(to_char(madeday, 'yyyy/mm/dd'), 'yyyy/mm/dd') as madeday,
+		        license
+		from
+		        movie
+		where
+		        to_char(OPENINGDAY,'yyyy') = #{year}
+		order by
+				openingday
+	</select>
+	<!-- 해당 영화의 정보를 가져온다. -->
+	<select id="readOneOfMovie" parameterType="int" resultType="Movie">
+		select
+		        MOVIE_SEQ,
+		        TITLE,
+		        GENRE,
+		        DIRECTOR,
+		        ACTORS,
+		        NATION,
+		        RUNNINGTIME,
+		        RATE,
+		        OPENINGDAY,
+		        CLOSINGDAY,
+		        POSTER,
+		        STILLSHOT,
+		        WEBADDRESS,
+		        STORY,
+		        MADEDAY,
+		        LICENSE
+		from
+		        MOVIE
+		where
+		        movie_seq = #{movie_seq}
+	</select>
+	<!-- 영화의 정보를 수정한다. -->
+	<update id="modifyMovie" parameterType="Movie">
+		update
+				movie
+		set
+				title = #{title},
+				genre = #{genre},
+				director = #{director},
+				actors = #{actors},
+				nation = #{nation},
+				runningtime = #{runningtime},
+				rate = #{rate},
+				openingday = to_date(#{openingday}, 'yyyy-mm-dd hh24:mi:ss'),
+				closingday = to_date(#{closingday}, 'yyyy-mm-dd hh24:mi:ss'),
+				<if test="poster != null">
+					poster = #{poster},
+				</if>
+				<if test="stillshot != null">
+					stillshot = #{stillshot},
+				</if>
+				STORY = #{story},
+				MADEDAY = to_date(#{madeday}, 'yyyy-mm-dd hh24:mi:ss'),
+				LICENSE = #{license}
+		where
+				movie_seq = #{movie_seq}
+	</update>
+	<!-- 영화를 삭제한다. -->
+	<delete id="deleteMovie" parameterType="int">
+		delete
+		from
+				movie
+		where
+				movie_seq = #{movie_seq}
+	</delete>
+	<!-- 영화를 등록한다. -->
+	<insert id="insertMovie" parameterType="Movie">
+		insert
+		into
+				movie(
+						MOVIE_SEQ,
+						TITLE, 
+						GENRE, 
+						DIRECTOR, 
+						ACTORS, 
+						NATION, 
+						RUNNINGTIME, 
+						RATE, 
+						OPENINGDAY, 
+						CLOSINGDAY,
+						POSTER,
+						STILLSHOT,
+						STORY,
+						MADEDAY,
+						LICENSE
+					)
+		values
+				(
+						SEQ_MOVIE_MOVIE_SEQ.nextval,
+						#{title}, 
+						#{genre}, 
+						#{director}, 
+						#{actors}, 
+						#{nation}, 
+						#{runningtime}, 
+						#{rate}, 
+						to_date(#{openingday}, 'yyyy-mm-dd hh24:mi:ss'), 
+						to_date(#{closingday}, 'yyyy-mm-dd hh24:mi:ss'),
+						#{poster},
+						#{stillshot},
+						#{story},
+						to_date(#{madeday}, 'yyyy-mm-dd hh24:mi:ss'),
+						#{license}
+				)
+	</insert>
+</mapper>

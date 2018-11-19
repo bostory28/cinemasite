@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- DB접속정보 값을 가지고 있는 파일 설정 -->
+	<properties resource="db.properties" />
+	
+	<!-- 별명 부여 -->
+	<typeAliases> 
+		<typeAlias type="hkc.theater.TheaterVO" alias="Theater"/>
+		<typeAlias type="hkc.main.PreviewVO" alias="PreviewVO"/>
+		<typeAlias type="hkc.main.MovieVO" alias="MovieVO"/>
+		<typeAlias type="hkc.movielist.ReserveVO" alias="ReserveVO"/>
+		<typeAlias type="hkc.vo.Movie" alias="Movie"/>
+		<typeAlias type="hkc.vo.Review" alias="Review"/>
+		<typeAlias type="hkc.reserve.ReserveVO" alias="Reserve"/>
+		<typeAlias type="hkc.member.MemberVO" alias="Member"/>
+		<typeAlias alias="Theater" type="hkc.theater.TheaterVO"/>
+		<typeAlias alias="Timetable" type="hkc.vo.Timetable"/>
+		<typeAlias type="hkc.vo.CreditcardVO" alias="Creditcard"/>
+		<typeAlias type="hkc.vo.PhoneVO" alias="Phone"/>
+		<typeAlias type="hkc.vo.Reservenow" alias="Reservenow"/>
+		
+		
+	</typeAliases>
+	
+	<!-- DB접속 정보 셋팅 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- mapper 파일 include -->
+	<mappers>
+		<mapper resource="mapper/theater/theaterMapper.xml"/>
+		<mapper resource="mapper/main/mainMapper.xml"/>
+		<mapper resource="mapper/movielist/movielistMapper.xml"/>
+		<mapper resource="mapper/admin/adminMapper.xml"/>
+		<mapper resource="mapper/detail/detailMapper.xml"/>
+		<mapper resource="mapper/reserve/reserveMapper.xml"/>
+		<mapper resource="mapper/member/memberMapper.xml"/>
+		<mapper resource="mapper/time/timeMapper.xml"/>
+		
+		
+		
+		
+		
+	</mappers>
+	
+</configuration>

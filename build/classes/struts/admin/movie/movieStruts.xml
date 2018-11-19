@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="movieAdmin" namespace="/movieAdmin" extends="default">
+		<action name="movieAdminView" class="hkc.admin.movie.MovieAction" method="movieAdminView">
+			<result>/jsp/admin/movie/movieList.jsp</result>
+		</action>
+		<action name="movieSelectedYear" class="hkc.admin.movie.MovieAction" method="movieSelectedYear">
+			<result type="json"></result>
+		</action>
+		<action name="readOneOfMovie" class="hkc.admin.movie.MovieAction" method="readOneOfMovie">
+			<result>/jsp/admin/movie/readMovie.jsp</result>
+		</action>
+		<action name="modifyMovie" class="hkc.admin.movie.MovieAction" method="modifyMovie">
+			<result>/jsp/admin/movie/movieList.jsp</result>
+		</action>
+		<action name="deleteMovie" class="hkc.admin.movie.MovieAction" method="deleteMovie">
+			<result>/jsp/admin/movie/movieList.jsp</result>
+		</action>
+		<action name="insertMovieView">
+			<result>/jsp/admin/movie/insertMovie.jsp</result>
+		</action>
+		<action name="insertMovie" class="hkc.admin.movie.MovieAction" method="insertMovie">
+			<result>/jsp/admin/movie/movieList.jsp</result>
+		</action>
+	</package>
+</struts>

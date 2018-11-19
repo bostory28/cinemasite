@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="time">
+	<select id="selectOpeningMovie" resultType="Movie">
+		select * from movie where to_date(closingday,'YY/MM/DD') >= to_date(sysdate,'YY/MM/DD')
+	</select>
+	<insert id="timeInsertUserMovieChoice" parameterType="Reservenow">
+		insert into reservenow(reservemovie_seq, userid) values (#{reservemovie_seq},#{userid})
+	</insert>
+	<select id="timeSelectUserMovieChoice" parameterType="Reservenow" resultType="Reservenow">
+		select * from reservenow where userid = #{userid}
+	</select>
+	<update id="timeUpdateUserMovieChoice" parameterType="Reservenow">
+		update reservenow set reservemovie_seq = #{reservemovie_seq} where userid = #{userid}
+	</update>
+	<select id="timeSelectUserDayChoice" parameterType="Reservenow" resultType="Reservenow">
+		select * from reservenow where userid = #{userid}
+	</select>
+	<insert id="timeInsertUserDayChoice" parameterType="Reservenow">
+		insert into reservenow(reserveday, userid) values (#{reserveday},#{userid})
+	</insert>
+	<update id="timeUpdateUserDayChoice" parameterType="Reservenow">
+		update reservenow set reserveday = #{reserveday} where userid = #{userid}
+	</update>
+	<select id="timeSelectMovieTime" parameterType="Reservenow" resultType="Timetable">
+		select t.timetable_seq, t.movie_seq, t.screeningday, t.starttime, t.theaterno, t.timeno, m.title, m.runningtime, m.rate ,m.openingday 
+		from timetable t, movie m 
+		where t.movie_seq = m.movie_seq and t.movie_seq = #{reservemovie_seq} and t.screeningday = to_date(#{reserveday},'YY/MM/DD') 
+		order by t.theaterno , t.timeno
+	</select>
+	<delete id="timeDeleteUserChoice" parameterType="String">
+		delete from reservenow where userid = #{userid}
+	</delete>
+	<select id="timeTodayMovieTime" parameterType="Reservenow" resultType="Timetable">
+		select t.timetable_seq, t.movie_seq, t.screeningday, t.starttime, t.theaterno, t.timeno, m.title, m.runningtime, m.rate ,m.openingday 
+		from timetable t, movie m 
+		where t.movie_seq = m.movie_seq and t.screeningday = to_date(#{reserveday},'YY/MM/DD') 
+		order by t.theaterno , t.timeno
+	</select>
+</mapper>

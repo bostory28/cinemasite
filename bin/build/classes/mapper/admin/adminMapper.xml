@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	<select id="adminSearchMovie" parameterType="String" resultType="Movie">
+		<![CDATA[select * from movie where title like '%'|| #{title}||'%' and to_date(closingday,'YY/MM/DD') >= to_date(sysdate,'YY/MM/DD')]]>
+	</select>
+	<select id="adminSearchOneMovie" parameterType="int" resultType="Movie">
+		select * from movie where movie_seq = #{movie_seq}
+	</select>
+	<insert id="adminInsertTimes" parameterType="Timetable">
+		insert into timetable values (SEQ_timetable_timetable_seq.nextval,#{movie_seq},to_date(#{screeningday},'YY/MM/DD'),#{starttime},#{theaterno},#{timeno})
+	</insert>
+	<select id="adminSelectTimetable" parameterType="String" resultType="Timetable">
+		select t.timetable_seq, t.movie_seq, t.screeningday, t.starttime, t.theaterno, t.timeno, m.title, m.runningtime 
+		from timetable t, movie m 
+		where t.movie_seq = m.movie_seq and t.screeningday = to_date(#{screeningday},'YY/MM/DD') 
+		order by t.theaterno , t.timeno
+	</select>
+	<select id="adminSelectOneTimetable" parameterType="Timetable" resultType="Timetable">
+		select * from timetable where screeningday = to_date(#{screeningday},'YY/MM/DD') and timeno = #{timeno} and theaterno = #{theaterno}
+	</select>
+	<select id="adminUpdateTimes" parameterType="Timetable">
+		update timetable set starttime = #{starttime}, movie_seq = #{movie_seq} where screeningday = to_date(#{screeningday},'YY/MM/DD') and timeno = #{timeno} and theaterno = #{theaterno}
+	</select>
+</mapper>
